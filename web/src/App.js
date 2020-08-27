@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import EntryList from './components/entryLists';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  render() {
+    return (
+      <EntryList
+        pokemon={[
+          { number: 15, shiny: false },
+          { number: 25, shiny: false },
+          { number: 35, shiny: false },
+          { number: 45, shiny: false },
+          { number: 55, shiny: false },
+          { number: 65, shiny: true },
+          { number: 75, shiny: false },
+          { number: 85, shiny: false },
+          { number: 95, shiny: true }
+        ]}
+      />
+    )
+  }
 }
 
 export default App;
