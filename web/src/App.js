@@ -4,19 +4,34 @@ import EntryList from './components/entryLists';
 
 class App extends Component {
 
+  getNumber = () => Math.floor(Math.random() * 700) + 1;
+
+  getShiny = () => Math.random() > .9;
+
   render() {
     return (
       <EntryList
         pokemon={[
-          { number: 15, shiny: false },
-          { number: 25, shiny: false },
-          { number: 35, shiny: false },
-          { number: 45, shiny: false },
-          { number: 55, shiny: false },
-          { number: 65, shiny: true },
-          { number: 75, shiny: false },
-          { number: 85, shiny: false },
-          { number: 95, shiny: true }
+          { number: this.getNumber(), shiny: this.getShiny()},
+          { number: this.getNumber(), shiny: this.getShiny()},
+          { number: this.getNumber(), shiny: this.getShiny()},
+          { number: this.getNumber(), shiny: this.getShiny()},
+          { number: this.getNumber(), shiny: this.getShiny()},
+          { number: this.getNumber(), shiny: this.getShiny()},
+          { number: this.getNumber(), shiny: this.getShiny()},
+          { number: this.getNumber(), shiny: this.getShiny()},
+          { number: this.getNumber(), shiny: this.getShiny()},
+          { number: this.getNumber(), shiny: this.getShiny()},
+          { number: this.getNumber(), shiny: this.getShiny()},
+          { number: this.getNumber(), shiny: this.getShiny()},
+          { number: this.getNumber(), shiny: this.getShiny()},
+          { number: this.getNumber(), shiny: this.getShiny()},
+          { number: this.getNumber(), shiny: this.getShiny()},
+          { number: this.getNumber(), shiny: this.getShiny()},
+          { number: this.getNumber(), shiny: this.getShiny()},
+          { number: this.getNumber(), shiny: this.getShiny()},
+          { number: this.getNumber(), shiny: this.getShiny()},
+          { number: this.getNumber(), shiny: this.getShiny()}
         ]}
       />
     )
