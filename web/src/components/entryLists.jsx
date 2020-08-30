@@ -4,7 +4,7 @@ import Entry from './entry';
 class EntryList extends Component {
     render() { 
         return ( 
-            <div style={{display: 'flex', flexWrap: 'wrap', backgroundColor: '#F2F2F2'}}>
+            <div style={{display: 'flex', flexWrap: 'wrap', alignContent: 'center'}}>
                 {this.props.pokemon.map(pokemon => 
                     <Entry
                         key={pokemon.number}

@@ -16,7 +16,7 @@ class Entry extends Component {
 
     }
     
-    catchPokemon = () => this.setState({caught:true});
+    catchPokemon = () => Math.random() > .4 ? this.setState({caught:true}) : null;
 
     getData = async () => await axios.get('https://pokeapi.co/api/v2/pokemon/' + this.props.number);
 
