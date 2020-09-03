@@ -8,11 +8,9 @@ import Avatar from '@material-ui/core/Avatar';
 import types from './types.js';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogActions from '@material-ui/core/DialogActions';
-import { ResponsiveRadar } from '@nivo/radar';
+import Stats from './stats.jsx';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 class Entry extends Component {
     state = {
@@ -40,7 +38,8 @@ class Entry extends Component {
               "taste": "sunny",
               "syrah": 84
             }
-          ]
+          ],
+        exclusions: ['normal', 'incarnate', 'ordinary', 'm', 'f', 'red', 'striped', 'aria', 'plant','standard', 'shield', 'altered', 'land']
     }
     
     catchPokemon = () => Math.random() > .4 ? this.setState({caught:true}) : null;
@@ -49,7 +48,10 @@ class Entry extends Component {
 
     parseName = name => {
         let splitString = name.toLowerCase().split('-');
-        return splitString[0].charAt(0).toUpperCase() + splitString[0].substring(1);
+        let newString = "";
+        splitString.forEach(item => !this.state.exclusions.includes(item) ? newString += item.charAt(0).toUpperCase() + item.substring(1) + " " : null)
+        console.log(newString);
+        return newString;
     }     
     
     getChipStyle = () => this.props.shiny ? { backgroundImage: 'linear-gradient(to bottom right, gold, orange)' } : {};
@@ -58,37 +60,34 @@ class Entry extends Component {
         let graphData = [];
         this.getData()
         .then(data => this.setState({data}))
-        .then(() => graphData = this.state.data.data.stats.map(stat => { return { stat: stat.stat.name, [this.state.data.data.name]: stat.base_stat } }))
+        .then(() => graphData = this.state.data.data.stats.map(stat => { return { stat: this.parseName(stat.stat.name), [this.state.data.data.name]: stat.base_stat } }))
         .then(() => this.setState({graphData}))
     }
 
-    // componentDidUpdate() {
-    //     let graphData = this.state.data && 
-    //     this.setState({ graphData })
-    // }
-
     handleClose = () => this.setState({ dialogOpen: false });
 
+    handleOpen = () => this.setState({ dialogOpen: true });
+
     render() { 
-        console.log(this.state.data)
+        // console.log(this.state.data)
         return ( 
             <React.Fragment>
-                <Paper elevation={3} style={{padding:10, margin: 10, width: 120}}>
-                    {this.state.data && 
+                <Paper elevation={3} style={{padding:10, margin: 10, width: 150}}>
+                    {this.state.data ? 
                     <div>
-                        <div onClick={() => this.setState({dialogOpen:true})}  style={{display: 'flex', marginBottom: 5}} >
+                        <div onClick={() => this.handleOpen()}  style={{display: 'flex', marginBottom: 5}} >
                             <div style={{ marginRight: 'auto'}}><Typography display='inline'>{this.parseName(this.state.data.data.name)}</Typography></div> 
-                            <div><Chip style={this.getChipStyle()} size='small' label={this.state.data.data.id} display='inline'/></div>
+                            <div ><Chip style={this.getChipStyle()} size='small' label={this.state.data.data.id} display='inline'/></div>
                         </div>
                         <Divider/>
-                        <div onClick={() => this.setState({dialogOpen:true})} >
+                        <div onClick={() => this.handleOpen()} >
                             {this.props.shiny ?
                             <img alt='shiny pokermon' style={{width: '100%', height: 'auto'}} src={this.state.data.data.sprites.front_shiny}></img> :
                             <img alt='boring normal pokerman' style={{width: '100%', height: 'auto'}} src={this.state.data.data.sprites.front_default}></img>}
                         </div>
                         <div style={{display: 'flex'}}>
-                            <AvatarGroup max={4} onClick={() => this.setState({dialogOpen:true})} >
-                                {this.state.data.data.types.map(type => <Avatar key={type.type.name}style={{height: 24, width: 24}} alt={type.type.name} src={types[type.type.name]}></Avatar>)}
+                            <AvatarGroup max={4} onClick={() => this.handleOpen()} >
+                                {this.state.data.data.types.map(type => <Avatar key={type.type.name}style={{height: 30, width: 30}} alt={type.type.name} src={types[type.type.name]}></Avatar>)}
                             </AvatarGroup>  
 
                             {this.state.caught ?
@@ -96,71 +95,9 @@ class Entry extends Component {
                             <Button variant='outlined' size='small' onClick={() => this.catchPokemon()} style={{marginLeft: 'auto'}}>Catch</Button> }                          
                         </div>
                     </div>
-                    }
+                    : <div style={{width: 40, height: 150, margin: "auto", marginTop: 55}}><CircularProgress /></div>}
                 </Paper>
-                {this.state.data && <Dialog open={this.state.dialogOpen} onClose={() => this.setState({ dialogOpen: false })}>
-                    <DialogTitle id="customized-dialog-title" onClose={() => this.setState({ dialogOpen: false })}>
-                        Statistics
-                    </DialogTitle>
-                    <DialogContent dividers>
-                    <div style={{height:800, width:600}}>
-                        <ResponsiveRadar
-                            data={this.state.graphData}
-                            keys={[ this.state.data.data.name ]}
-                            indexBy="stat"
-                            maxValue="auto"
-                            margin={{ top: 70, right: 80, bottom: 40, left: 80 }}
-                            curve="linearClosed"
-                            borderWidth={2}
-                            borderColor={{ from: 'color' }}
-                            gridLevels={5}
-                            gridShape="hexagon"
-                            gridLabelOffset={36}
-                            enableDots={true}
-                            dotSize={10}
-                            dotColor={{ theme: 'background' }}
-                            dotBorderWidth={2}
-                            dotBorderColor={{ from: 'color' }}
-                            enableDotLabel={true}
-                            dotLabel="value"
-                            dotLabelYOffset={-12}
-                            colors={{ scheme: 'nivo' }}
-                            fillOpacity={0.25}
-                            blendMode="multiply"
-                            animate={true}
-                            motionStiffness={90}
-                            motionDamping={15}
-                            isInteractive={true}
-                            legends={[
-                                {
-                                    anchor: 'top-left',
-                                    direction: 'column',
-                                    translateX: -50,
-                                    translateY: -40,
-                                    itemWidth: 80,
-                                    itemHeight: 20,
-                                    itemTextColor: '#999',
-                                    symbolSize: 12,
-                                    symbolShape: 'circle',
-                                    effects: [
-                                        {
-                                            on: 'hover',
-                                            style: {
-                                                itemTextColor: '#000'
-                                            }
-                                        }
-                                    ]
-                                }
-                            ]}
-                        />
-                    </div>
-                    </DialogContent>
-                    <DialogActions>
-                    <Button autoFocus onClick={() => this.setState({ dialogOpen: false })} color="primary">
-                        Close
-                    </Button>
-                    </DialogActions>
-                    </Dialog>}
+                {this.state.data && <Stats graphData={this.state.graphData} name={this.state.data.data.name} handleClose={() => this.handleClose()} dialogOpen ={this.state.dialogOpen}/>}
             </React.Fragment>
         );
     }
