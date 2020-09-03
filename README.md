@@ -1,72 +1,68 @@
-# Project Title
-## Project Description
-Enter project description here.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Build Directions
-### Dependencies
-The project is built using Docker which simplifies the host dependency requirements.  You'll want to install Docker using the preferred method for your operating system.  Here are some examples:
+## Available Scripts
 
-#### APT (Ubuntu, Debian, Elementary, Deepin, etc)
-```bash
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu <codename> stable"
-sudo apt install docker-ce docker-compose
-```
-**__NOTE:__** Replace `<codename>` with your OS codename(xenial, bionic, etc)
-#### YUM (Pre 8 CENTOS and RHEL)
-```bash
-sudo yum-utils device-mapper-persistent-data lvm2 epel-release
-sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-sudo yum install docker-ce docker-compose
-```
-#### DNF (8+ CENTOS and RHEL, FEDORA)
-```bash
-sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-sudo dnf install docker-ce docker-compose
-```
-#### PACMAN (Arch, Manjaro)
-```bash
-sudo pacman -Sy docker docker-compose
-```
-You will probably want to **add your user to the docker group** to avoid having to use sudo for everything.  You can do that by using the command `sudo usermod -aG docker $(whoami)`
+In the project directory, you can run:
 
-**__NOTE:__** You will have to log out and log back in to process the user group change on your account.
+### `npm start`
 
-### Host Configuration
+Runs the app in the development mode.<br />
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-#### Enable Docker
-```bash
-sudo systemctl enable docker
-sudo systemctl start docker
-```
-#### Clone Repository
-```bash
-git clone <git_address> /path/to/desired/destination
-```
-**__NOTE:__** You can omit the path if you want to clone it to the current directory
+The page will reload if you make edits.<br />
+You will also see any lint errors in the console.
 
-### Run Instance
-```bash
-cd /path/to/cloned/repo
-docker-compose up -d
-```
-**__NOTE:__** You can omit the `-d` flag if you do not want to run detached.
+### `npm test`
 
-## Connecting to the Application
+Launches the test runner in the interactive watch mode.<br />
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-The project is currently configured to forward port 3000 of the web application container to the host.  You should be able to access the application by pointing your web browser to `localhost:3000`
+### `npm run build`
 
-## Rebuilding Project
-Rebuild project using cached images:
-```bash
-docker stop $(docker ps -a -q)
-docker-compose build
-docker-compose up
-```
-Rebuild project without using cached images:
-```bash
-docker stop $(docker ps -a -q)
-docker system prune -af
-docker-compose up
-```
-**__NOTE:__** You may need to delete the node_modules directories if the project fails to build
+Builds the app for production to the `build` folder.<br />
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.<br />
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+
+### Analyzing the Bundle Size
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+
+### Making a Progressive Web App
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+
+### Advanced Configuration
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+
+### Deployment
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+
+### `npm run build` fails to minify
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
